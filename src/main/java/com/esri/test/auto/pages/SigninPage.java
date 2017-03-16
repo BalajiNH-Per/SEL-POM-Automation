@@ -1,0 +1,101 @@
+package com.esri.test.auto.pages;
+
+import org.openqa.selenium.By;
+
+import com.esri.test.auto.utils.Reporter;
+import com.esri.test.auto.wrappers.ESRIWrappers;
+
+/**
+ * This is the Esri Accounts - Sign in Page of IAM Application
+ * 
+ * @author udhayaundar
+ *
+ */
+public class SigninPage extends ESRIWrappers {
+
+	public SigninPage() throws Throwable {
+		waitForPageLoad(15);
+		if (!VerifyTitle("Esri Accounts")) {
+			Reporter.reportStep("This is not a login page", "FAIL");
+		}
+	}
+
+	// Enter the UserName
+	public SigninPage enterUserName(String userdata) throws Throwable {
+		switchToFrameByIndex(0);
+		waitForPageLoad(5);
+		enterById(prop.getProperty("Signin.username.Id"), userdata);
+		return this;
+	}
+
+	// Enter the Password
+	public SigninPage enterPassword(String pwd) throws Throwable {
+		enterById(prop.getProperty("Signin.password.Id"), pwd);
+		return this;
+	}
+
+	// Click Sign in button positive scenario
+	public Dist_HomePage clickSignin() throws Throwable {
+		clickById(prop.getProperty("Signin.Signinbtn.Id"));
+		return new Dist_HomePage();
+	}
+	
+	// Click Sign in for Esri Sitecore
+	public ESRINewHomePage clickSigninAccounts(String data) throws Throwable {
+		clickButtonById(prop.getProperty("Signin.Signinbtn.Id"),data);
+		return new ESRINewHomePage();
+	}
+	
+	// Click Sign in button positive scenario
+		public MyEsriPage clickSigninMyEsri() throws Throwable {
+			clickById(prop.getProperty("Signin.Signinbtn.Id"));
+			return new MyEsriPage();
+		}
+
+	// Click Sign in button negative scenario
+	public SigninPage clickSigninforFailure() throws Throwable {
+		clickById(prop.getProperty("Signin.Signinbtn.Id"));
+		return this;
+	}
+
+	// Click facebook Sign in button
+	public FacebookSigninPage clickFacebooklink() throws Throwable {
+		try {
+			switchToFrameByIndex(0);
+			clickById(prop.getProperty("Signin.loginFacebook.Id"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new FacebookSigninPage();
+	}
+
+	// Click google Sign in button
+	public GoogleSigninPage clickGooglelink() throws Throwable {
+		try {
+			switchToFrameByIndex(0);
+			clickById(prop.getProperty("Signin.loginGoogle.Id"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new GoogleSigninPage();
+	}
+	
+	//click create account button
+	public CreateAccountPage clickCreateAccount() throws Throwable{
+		try {
+			clickById(prop.getProperty("createAcc.menu.Id"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new CreateAccountPage();
+	}
+	
+	// Verify the error message
+	public SigninPage verifyErrorMessage(String errorMessage) throws Throwable{
+		System.out.println("Error Message: "+driver.findElement(By.id(prop.getProperty("homePage.errorMessage.id"))).getText()+" status :"
+				+ driver.findElement(By.id(prop.getProperty("homePage.errorMessage.id"))).getText().equalsIgnoreCase(errorMessage));
+		VerifyTextById(prop.getProperty("homePage.errorMessage.id"), errorMessage);
+		return this;
+	}
+	
+}

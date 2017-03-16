@@ -1,0 +1,1 @@
+java -jar selenium-server-standalone-2.53.1.jar -role webdriver -hub http://localhost:4444/grid/register -browser "browserName=internet explorer,platform=WINDOWS,maxInstances=1" -Dwebdriver.internetexplorer.driver="IEDriverServer.exe" -port 5556
